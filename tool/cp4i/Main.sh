@@ -38,7 +38,7 @@ if [ $? -ne 0 ]; then
 fi
 
 ############## VALIDATIONS ABOUT: [NAMESPACE] ##############  
-echo "${vTRANSACTION}> [ STEP 1 OF 6 ]: Creating a 'new Project/Namespace'..${CLEAR}"
+echo "${vTRANSACTION}> [ STEP 1 OF 6 ]: Creating the 'new Project/Namespace': [${namespace_name}]..${CLEAR}"
 cat ${vPATH}/scripts/1_new-project.yml | sed "s/NAMESPACE_NAME/${namespace_name}/" > ${vLOG_PATH_TEMP}
 oc apply -f ${vLOG_PATH_TEMP} &> /dev/null  && sleep 30
 cat ${vLOG_PATH_TEMP} >> ${vLOG_PATH}
@@ -75,7 +75,7 @@ oc apply -f ${vLOG_PATH_TEMP} &> /dev/null && sleep 300
 cat ${vLOG_PATH_TEMP} >> ${vLOG_PATH}
 rm -f ${vLOG_PATH_TEMP}
 
-while [[ $(oc get pods -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') == "False" ]]; do echo ">>> waiting for the PODs change to be READY" && sleep 30; done
+while [[ $(oc get pods -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}' -n ${namespace_name}) == "False" ]]; do echo ">>> waiting for the PODs change to be READY" && sleep 30; done
 echo "${vTRANSACTION}>> Done .."
 
 
@@ -87,17 +87,17 @@ oc apply -f ${vLOG_PATH_TEMP} &> /dev/null && sleep 100
 cat ${vLOG_PATH_TEMP} >> ${vLOG_PATH}
 rm -f ${vLOG_PATH_TEMP}
 
-while [[ $(oc get PlatformNavigator/pn-cloudpak-instance -o 'jsonpath={..status.conditions[].type}') != "Ready" ]]; do echo "${vTRANSACTION}>>> waiting for 'Platform-Navigator' change to be READY" && sleep 300; done
+while [[ $(oc get PlatformNavigator/pn-cloudpak-instance -n ${namespace_name} -o 'jsonpath={..status.conditions[].type}') != "Ready" ]]; do echo "${vTRANSACTION}>>> waiting for 'Platform-Navigator' change to be READY" && sleep 300; done
 echo "${vTRANSACTION}>> Done .."
 
 
 ############## VALIDATIONS ABOUT: [ACCESS TO CREDENTIALs] ############## 
 echo "${vTRANSACTION}> [ STEP 6 OF 6 ]: 'Platform-Navigator' access credentials.." && echo "# console_url";
-oc get PlatformNavigator ${platform_navigator_name} -o jsonpath='{.status.endpoints[].uri}' -n ${namespace_name}; echo "" > ${vLOG_PATH_TEMP}
+oc get PlatformNavigator ${platform_navigator_name} -o jsonpath='{.status.endpoints[].uri}' -n ${namespace_name}; echo "" 
 cat ${vLOG_PATH_TEMP} >> ${vLOG_PATH}
 rm -f ${vLOG_PATH_TEMP}
 
-oc extract secret/platform-auth-idp-credentials -n ibm-common-services --to=- > ${vLOG_PATH_TEMP} 
+oc extract secret/platform-auth-idp-credentials -n ibm-common-services --to=-  
 cat ${vLOG_PATH_TEMP} >> ${vLOG_PATH}
 rm -f ${vLOG_PATH_TEMP}
 echo "${vTRANSACTION}>> Done .."

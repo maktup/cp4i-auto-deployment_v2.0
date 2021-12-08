@@ -1,14 +1,13 @@
-apiVersion: integration.ibm.com/v1beta1
-kind: PlatformNavigator
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
 metadata:
-  name: pn-cloudpak-instance
-  namespace: my-dummy-cp4i-new2
+  name: ibm-operator-catalog
+  namespace: openshift-marketplace
 spec:
-  license:
-    accept: true
-    license: L-RJON-C5CSNH
-  mqDashboard: true
-  replicas: 1
-  storage: 
-    class: ibmc-file-gold-gid
-  version: 2021.3.1
+  displayName: IBM Operator Catalog
+  image: 'icr.io/cpopen/ibm-operator-catalog:latest'
+  publisher: IBM
+  sourceType: grpc
+  updateStrategy:
+    registryPoll:
+      interval: 45m
