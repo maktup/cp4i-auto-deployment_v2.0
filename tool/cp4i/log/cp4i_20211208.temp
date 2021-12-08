@@ -1,0 +1,14 @@
+apiVersion: integration.ibm.com/v1beta1
+kind: PlatformNavigator
+metadata:
+  name: pn-cloudpak-instance
+  namespace: my-dummy-cp4i-new2
+spec:
+  license:
+    accept: true
+    license: L-RJON-C5CSNH
+  mqDashboard: true
+  replicas: 1
+  storage: 
+    class: ibmc-file-gold-gid
+  version: 2021.3.1

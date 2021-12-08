@@ -1,0 +1,14 @@
+apiVersion: integration.ibm.com/v1beta1
+kind: PlatformNavigator
+metadata:
+  name: PLATFORM_NAVIGATOR_NAME
+  namespace: NAMESPACE_NAME
+spec:
+  license:
+    accept: true
+    license: PLATFORM_NAVIGATOR_LICENSE
+  mqDashboard: true
+  replicas: PLATFORM_NAVIGATOR_REPLICAS
+  storage: 
+    class: PLATFORM_NAVIGATOR_STORAGE
+  version: PLATFORM_NAVIGATOR_VERSION

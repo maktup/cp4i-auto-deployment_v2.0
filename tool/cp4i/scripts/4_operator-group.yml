@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: ibm-cp4i-ope-gp
+  namespace: NAMESPACE_NAME
+spec:
+  targetNamespaces:
+  - NAMESPACE_NAME
