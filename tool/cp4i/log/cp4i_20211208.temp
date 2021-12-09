@@ -1,0 +1,7 @@
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: my-cp4i
+spec:
+  finalizers:
+  - kubernetes
