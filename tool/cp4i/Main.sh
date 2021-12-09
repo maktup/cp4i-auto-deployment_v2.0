@@ -94,12 +94,7 @@ echo "${vTRANSACTION}>> Done .."
 ############## VALIDATIONS ABOUT: [ACCESS TO CREDENTIALs] ############## 
 echo "${vTRANSACTION}> [ STEP 6 OF 6 ]: 'Platform-Navigator' access credentials.." && echo "# console_url";
 oc get PlatformNavigator ${platform_navigator_name} -o jsonpath='{.status.endpoints[].uri}' -n ${namespace_name}; echo "" 
-cat ${vLOG_PATH_TEMP} >> ${vLOG_PATH}
-rm -f ${vLOG_PATH_TEMP}
-
 oc extract secret/platform-auth-idp-credentials -n ibm-common-services --to=-  
-cat ${vLOG_PATH_TEMP} >> ${vLOG_PATH}
-rm -f ${vLOG_PATH_TEMP}
 echo "${vTRANSACTION}>> Done .."
 
 echo "${vTRANSACTION} Generating execution 'LOG-FILE' in the PATH:[${vLOG_PATH}]..." 
